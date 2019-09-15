@@ -55,6 +55,18 @@
   
 }
 
+.shadow-box {
+  -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  box-shadow: 1px 1px 2px 0 #d0d0d0;
+  background: rgba(179, 207, 255, 0.7);
+  border: 1px solid #ccc;
+  border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
 .subhead {
   font-family: 'Special Elite', cursive;
   color: rgb(129, 165, 242);
@@ -64,4 +76,24 @@
 body {
   background: image_url('textured_paper.png');
   font-family: 'Crimson Text', serif;
+}
+
+hr.mystyle {
+  overflow: visible;
+  padding: 0;
+  border: none;
+  border-top: medium double rgb(222, 226, 236);
+  color: rgb(222, 226, 236);
+  text-align: center;
+  position: relative;
+  text-align: center;
+}
+
+hr.mystyle:after {
+    content: "§";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.5em;
 }

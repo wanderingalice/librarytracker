@@ -24,10 +24,21 @@
               My Libraries
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#"> Libraries</a>
+              <a class="dropdown-item" href="">My Libraries</a>
+              <a class="dropdown-item"> <%= link_to 'Add a New Library', new_librarian_library_path, class: "dropdown-item" %></a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Books
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#"></a>
+              <a class="dropdown-item" href="#">My Books</a>
+              <a class="dropdown-item" href="#">Add a New Book</a>
               <a class="dropdown-item" href="#">Books On Loan</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Books Loaned To Me</a>
+              <a class="dropdown-item" href="#">Books Loaned to Me</a>
             </div>
           </li>
         </ul>

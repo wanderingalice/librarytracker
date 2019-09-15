@@ -1,0 +1,32 @@
+<br />
+<div class= "frosted-box col-10 offset-1  text-center">
+  <div class="containter-fluid">
+    <div class="row">
+      <div class="col-2">
+        Librarian: &nbsp; 
+        <br />
+        <%= @library.user.email %>
+      </div>
+      <div class="col">
+        <br />
+        <h1 class= "pagehead"><%= @library.title %></h1>
+        <div class= "subhead">
+          <h3><%= @library.description %></h3>
+        </div>
+      </div>
+      <div class="col-2">
+        Library Type: &nbsp; 
+        <br />
+        <%= @library.librarytype %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm text-center">
+        Library Location:&nbsp; &nbsp; <%= @library.location %>
+      </div>
+    </div>
+  </div>
+  <hr class='mystyle' data-content="or"></hr>
+  <br />
+
+</div>

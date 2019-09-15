@@ -72,3 +72,5 @@ end
 gem 'simple_form'
 
 gem 'devise'
+
+gem 'rails_admin', '~> 2.0'
