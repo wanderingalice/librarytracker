@@ -1,0 +1,41 @@
+<h1 class="text-center DashTitle">My Libraries</h1>
+<%= current_user.libraries.each do |library| %>
+  <div class = "frosted-box col-10 offset-1">
+    <br />
+    <h2 class="text-center"><%= link_to library.title, librarian_library_path(library), class: "LibraryTitle" %></h2>
+    <hr class="mystyle" />
+    <div class= "container">
+      <div class ="row text-center">
+        <div class = "col-12 LibraryDescrip">
+          <%= library.description %>
+        </div>
+      </div>
+      <br />
+      <div class="row text-center rowheader">
+        <div class="col-4">
+          Location
+        </div>
+        <div class="col-4">
+          Library Type
+        </div>
+        <div class="col-4">
+          Books in <%= library.title %>
+        </div>
+      </div>
+      <br />
+      <div class="row text-center myinfo">
+        <div class="col-4">
+          <%= library.location %>
+        </div>
+        <div class="col-4">
+          <%= library.librarytype %>
+        </div>
+        <div class="col-4">
+          Count of Books
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>
+  <br />
+<% end %>

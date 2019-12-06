@@ -12,7 +12,7 @@
 .frosted-box {
   background: rgba(0, 0, 0, 0.5);
   text-shadow: rgba(0, 0, 0, 0.95) 1px 1px 5px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Crimson Text', serif;
   color: #FFFFFF;
 }
 
@@ -47,12 +47,40 @@
   color: rgb(213, 225, 250);
 }
 
+.myinfo {
+  font-size: 1.5em;
+}
+
 .sectionhead {
   font-family: 'Special Elite', cursive;
   text-decoration: underline;
   text-shadow: 3px 2px rgb(15, 55, 142);
   color: rgb(213, 225, 250);
   
+}
+
+.LibraryTitle {
+  text-shadow: 3px 2px rgb(15, 55, 142);
+  color: rgb(213, 225, 250);
+  font-family: 'Special Elite', cursive;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.LibraryDescrip {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.5em;
+  margin-top: 5px;
+}
+
+.DashTitle {
+  font-size: 3.5em;
+  text-decoration: underline;
+  font-family: 'Cinzel Decorative', cursive;
+  text-shadow: 3px 2px rgb(255, 255, 255);
+  color: rgb(15, 55, 142);
+  margin-top: 20px;
 }
 
 .shadow-box {
@@ -65,12 +93,20 @@
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 20px;
+  font-family: 'Crimson Text', serif;
 }
 
 .subhead {
   font-family: 'Special Elite', cursive;
   color: rgb(129, 165, 242);
   text-shadow: 2px 2px rgb(54, 71, 108);
+}
+
+.rowheader {
+  font-family: 'Special Elite', cursive;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 body {

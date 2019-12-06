@@ -12,7 +12,11 @@
   <body>
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-      <%= link_to 'Athenaeum', root_path, class: 'navbar-brand' %>
+      <% if user_signed_in? %>
+        <%= link_to 'Athenaeum', librarian_libraries_url, class: 'navbar-brand' %>
+      <% else %>
+        <%= link_to 'Athenaeum', root_path, class: 'navbar-brand' %>
+      <% end %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,7 +28,7 @@
               My Libraries
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">My Libraries</a>
+              <a class="dropdown-item"><%= link_to 'My Libraries', librarian_libraries_url, class: "dropdown-item" %></a>
               <a class="dropdown-item"> <%= link_to 'Add a New Library', new_librarian_library_path, class: "dropdown-item" %></a>
             </div>
           </li>

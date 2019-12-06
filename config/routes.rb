@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#index'
   namespace :librarian do
-    resources :libraries, only: [:new, :create, :show]
+    resources :libraries, only: [:new, :create, :show, :index]
   end
 end
