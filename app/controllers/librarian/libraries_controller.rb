@@ -19,6 +19,10 @@ class Librarian::LibrariesController < ApplicationController
     @library = Library.find(params[:id])
   end
 
+  def index
+
+  end
+
   private
 
   def library_params

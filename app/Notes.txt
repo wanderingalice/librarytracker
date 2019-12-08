@@ -1,0 +1,21 @@
+book
+-isbn
+-name
+-author
+-description
+-image (cover art)
+  -copy
+    -library (belongsto)
+    -copy owner (default from library owner - otherwise text field)
+    -status (in library/on loan)
+    -notes
+    -loaned to (user)
+
+library
+  -owner(user)
+  -copies(book)
+
+
+User
+  -libraries
+  -copies on loan to user

@@ -10,71 +10,79 @@
   </head>
 
   <body>
+    <div class="mynavbar">
+      <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <% if user_signed_in? %>
+          <%= link_to 'Athenaeum', librarian_libraries_url, class: 'navbar-brand' %>
+        <% else %>
+          <%= link_to 'Athenaeum', root_path, class: 'navbar-brand' %>
+        <% end %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-      <% if user_signed_in? %>
-        <%= link_to 'Athenaeum', librarian_libraries_url, class: 'navbar-brand' %>
-      <% else %>
-        <%= link_to 'Athenaeum', root_path, class: 'navbar-brand' %>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                My Libraries
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item"><%= link_to 'My Libraries', librarian_libraries_url, class: "dropdown-item" %></a>
+                <a class="dropdown-item"> <%= link_to 'Add a New Library', new_librarian_library_path, class: "dropdown-item" %></a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Books
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#"></a>
+                <a class="dropdown-item" href="#">My Books</a>
+                <a class="dropdown-item" href="#">Add a New Book</a>
+                <a class="dropdown-item" href="#">Books On Loan</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Books Loaned to Me</a>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to current_user.email, '#', class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                 <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>    
+
+      <% if notice.present? %>
+        <p class="alert alert-info"><%= notice %></p>
       <% end %>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <% if alert.present? %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              My Libraries
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item"><%= link_to 'My Libraries', librarian_libraries_url, class: "dropdown-item" %></a>
-              <a class="dropdown-item"> <%= link_to 'Add a New Library', new_librarian_library_path, class: "dropdown-item" %></a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Books
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#"></a>
-              <a class="dropdown-item" href="#">My Books</a>
-              <a class="dropdown-item" href="#">Add a New Book</a>
-              <a class="dropdown-item" href="#">Books On Loan</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Books Loaned to Me</a>
-            </div>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to current_user.email, '#', class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
-            </li>
-          <% end %>
-        </ul>
+      <%= yield %>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <div class="foottext">
+          footer info here
+        </div>
       </div>
-    </nav>    
-
-    <% if notice.present? %>
-      <p class="alert alert-info"><%= notice %></p>
-    <% end %>
-    <% if alert.present? %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-
-    <%= yield %>
-
+    </div>
 
   </body>
 </html>

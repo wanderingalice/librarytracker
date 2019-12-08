@@ -1,32 +1,32 @@
 class LibrariesController < ApplicationController
 before_action :authenticate_user!
 
-  def index
+  # def index
     
-  end
+  # end
 
-  def new
-    @library = Library.new
-  end
+  # def new
+  #   @library = Library.new
+  # end
 
-  def create
-    @library = current_user.libraries.create(library_params)
-    if @library.valid?
-      redirect_to librarian_library_path(@library)
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
+  # def create
+  #   @library = current_user.libraries.create(library_params)
+  #   if @library.valid?
+  #     redirect_to librarian_library_path(@library)
+  #   else
+  #     render :new, status: :unprocessable_entity
+  #   end
+  # end
 
-  def show
-    @library = Library.find(params[:id])
-  end
+  # def show
+  #   @library = Library.find(params[:id])
+  # end
 
-  private
+  # private
 
-  def library_params
-    params.require(:library).permit(:title, :librarytype, :description, :location)
-  end
+  # def library_params
+  #   params.require(:library).permit(:title, :librarytype, :description, :location)
+  # end
 
 
 end
