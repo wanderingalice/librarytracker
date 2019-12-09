@@ -1,0 +1,59 @@
+<div class="searchbar text-right">
+  <form>
+    <input type="text" id="isbn" value="ISBN">
+    <button type ="button" onclick="readValue(document.getElementById('isbn').value)">
+      Search
+    </button>
+  </form>
+</div>
+<h1 class="text-center DashTitle">Add A Book</h1>
+
+<div id="content"></div>
+    <script>
+      function handleResponse(response) {
+      for (var i = 0; i < response.items.length; i++) {
+        var item = response.items[i];
+        // in production code, item.text should have the HTML entities escaped.\
+        if (item.volumeInfo.subtitle === undefined) {var mySubtitle =''} else {mySubtitle =item.volumeInfo.subtitle};
+        var myBookID = String(item.id);
+        var myAuthors = String(item.volumeInfo.authors);
+        var myAuthors = myAuthors.replace(/,/g,', ');
+        document.getElementById("content").innerHTML += "<br><div class='frosted-box col-10 offset-1'><br /><div class='bookInfo'><table class='bookdisplay' cellpadding='5'><tr><td colspan='2'><h3>" + item.volumeInfo.title + "</h3></td></tr><tr><td colspan='2'>" + mySubtitle + "</td></tr><tr><td rowspan='3'><img src='" + item.volumeInfo.imageLinks.thumbnail + "'></td><td>" + myAuthors + "</td></tr><tr><td>" + item.volumeInfo.publisher + " - " + item.volumeInfo.publishedDate +"</td></tr><tr><td rowspan='2'>" + item.volumeInfo.description + "</td></tr><tr><td valign='top'><button class='btn btn-info' onclick='submitBook(`" + myBookID + "`)'>Add To Library</button></td></tr></table><br /></div><br /></div>"; 
+      }
+    }
+    </script>
+   
+    <script type="text/javascript">
+      function submitBook(bookid) {
+        console.log(bookid);
+      };
+    </script>
+
+    <script type="text/javascript">
+      function readValue(isbn) {
+        var searchTerms = isbn.replace(/ /g, "+");
+        var callAPI = "https://www.googleapis.com/books/v1/volumes?q="+ searchTerms +"&callback=handleResponse";
+        console.log(callAPI);
+
+       var head= document.getElementsByTagName('head')[0];
+       var script= document.createElement('script');
+       script.type= 'text/javascript';
+       script.src= callAPI;
+       head.appendChild(script);
+      };
+    </script>
+    <br />
+  </body>
+
+
+ <!--      t.string "title"
+    t.string "subtitle"
+    t.string "book_id"
+    t.string "isbn"
+    t.string "author"
+    t.string "publisher"
+    t.date "published_date"
+    t.string "description"
+    t.integer "page_count"
+    t.string "cover_image_small"
+    t.string "cover_image_large" -->
