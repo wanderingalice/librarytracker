@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_08_014841) do
+ActiveRecord::Schema.define(version: 2019_12_10_051456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 2019_12_08_014841) do
     t.string "cover_image_large"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "copies", force: :cascade do |t|
+    t.integer "library_id"
+    t.integer "book_id"
+    t.string "bookowner"
+    t.string "status"
+    t.text "notes"
+    t.string "loanedto"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["library_id"], name: "index_copies_on_library_id"
   end
 
   create_table "libraries", force: :cascade do |t|

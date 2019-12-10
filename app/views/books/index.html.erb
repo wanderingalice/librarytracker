@@ -1,24 +1,30 @@
-<div class="searchbar text-right">
-  <form>
-    <input type="text" id="isbn" value="ISBN">
-    <button type ="button" onclick="readValue(document.getElementById('isbn').value)">
-      Search
-    </button>
-  </form>
+<div class="text-right" id="searchplace">
 </div>
+
 <h1 class="text-center DashTitle">Add A Book</h1>
 
-<div id="content"></div>
+<div id="content">
+  <div class="text-center">
+    <form id="searchbar">
+      <input type="text" id="isbn" placeholder="ISBN">
+      <button type ="submit">
+        Search
+      </button>
+    </form>
+  </div>
+</div>
+
     <script>
       function handleResponse(response) {
+        document.getElementById("searchplace").innerHTML = "<form id='searchbar'><input type='text' id='isbn' placeholder='ISBN'><button type ='submit'>Search</button></form>";
       for (var i = 0; i < response.items.length; i++) {
         var item = response.items[i];
-        // in production code, item.text should have the HTML entities escaped.\
-        if (item.volumeInfo.subtitle === undefined) {var mySubtitle =''} else {mySubtitle =item.volumeInfo.subtitle};
+        if (item.volumeInfo.subtitle === undefined) {var mySubtitle =''} else {var mySubtitle =item.volumeInfo.subtitle};
         var myBookID = String(item.id);
         var myAuthors = String(item.volumeInfo.authors);
         var myAuthors = myAuthors.replace(/,/g,', ');
-        document.getElementById("content").innerHTML += "<br><div class='frosted-box col-10 offset-1'><br /><div class='bookInfo'><table class='bookdisplay' cellpadding='5'><tr><td colspan='2'><h3>" + item.volumeInfo.title + "</h3></td></tr><tr><td colspan='2'>" + mySubtitle + "</td></tr><tr><td rowspan='3'><img src='" + item.volumeInfo.imageLinks.thumbnail + "'></td><td>" + myAuthors + "</td></tr><tr><td>" + item.volumeInfo.publisher + " - " + item.volumeInfo.publishedDate +"</td></tr><tr><td rowspan='2'>" + item.volumeInfo.description + "</td></tr><tr><td valign='top'><button class='btn btn-info' onclick='submitBook(`" + myBookID + "`)'>Add To Library</button></td></tr></table><br /></div><br /></div>"; 
+        if (item.volumeInfo.imageLinks.thumbnail === undefined) { var bookThumb = "<tr><td rowspan='3'>Image Unavailable</td><td>"} else {var bookthumb = "<tr><td rowspan='3'><img src='" + item.volumeInfo.imageLinks.thumbnail + "'></td><td>"};
+        document.getElementById("content").innerHTML += "<br><div class='frosted-box col-10 offset-1'><br /><div class='bookInfo'><table class='bookdisplay' cellpadding='5'><tr><td colspan='2'><h3>" + item.volumeInfo.title + "</h3></td></tr><tr><td colspan='2'>" + mySubtitle + "</td></tr>" + bookthumb + myAuthors + "</td></tr><tr><td>" + item.volumeInfo.publisher + " - " + item.volumeInfo.publishedDate +"</td></tr><tr><td rowspan='2'>" + item.volumeInfo.description + "</td></tr><tr><td valign='top'><button class='btn btn-info' onclick='submitBook(`" + myBookID + "`)'>Add To Library</button></td></tr></table><br /></div><br /></div>"; 
       }
     }
     </script>
@@ -26,34 +32,51 @@
     <script type="text/javascript">
       function submitBook(bookid) {
         console.log(bookid);
+      var myVolume = "https://www.googleapis.com/books/v1/volumes/" + bookid;
+      var request = new XMLHttpRequest()
+
+      request.open('GET', myVolume, true)
+      request.onload = function() {
+
+        var data = JSON.parse(this.response)
+
+        if (request.status >= 200 && request.status < 400) {
+            console.log(data.volumeInfo.title)
+            console.log(data.volumeInfo.subtitle)
+            console.log(data.id)
+            console.log(data.volumeInfo.industryIdentifiers)
+            console.log(data.volumeInfo.authors)
+            console.log(data.volumeInfo.publisher)
+            console.log(data.volumeInfo.publishedDate)
+            console.log(data.volumeInfo.description)
+            console.log(data.volumeInfo.pageCount)
+            console.log(data.volumeInfo.imageLinks.thumbnail)
+            console.log(data.volumeInfo.imageLinks.large)
+        } else {
+          console.log('error')
+        }
+      }
+
+      request.send()
       };
     </script>
 
     <script type="text/javascript">
-      function readValue(isbn) {
+      $('#searchbar').submit(function(event) {
+        event.preventDefault();
+        var isbn = document.getElementById('isbn').value;
         var searchTerms = isbn.replace(/ /g, "+");
-        var callAPI = "https://www.googleapis.com/books/v1/volumes?q="+ searchTerms +"&callback=handleResponse";
-        console.log(callAPI);
+        var callAPI = "https://www.googleapis.com/books/v1/volumes?q="+ searchTerms +"&callback=handleResponse&key=AIzaSyBEq-PJUNmE0kBG7s761jmUizXrQddKZrM&c";
+
+        document.getElementById("content").innerHTML = ""
 
        var head= document.getElementsByTagName('head')[0];
        var script= document.createElement('script');
        script.type= 'text/javascript';
        script.src= callAPI;
        head.appendChild(script);
-      };
+      });
+
     </script>
     <br />
   </body>
-
-
- <!--      t.string "title"
-    t.string "subtitle"
-    t.string "book_id"
-    t.string "isbn"
-    t.string "author"
-    t.string "publisher"
-    t.date "published_date"
-    t.string "description"
-    t.integer "page_count"
-    t.string "cover_image_small"
-    t.string "cover_image_large" -->
