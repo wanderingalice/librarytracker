@@ -2,6 +2,7 @@ class Librarian::LibrariesController < ApplicationController
 
   before_action :authenticate_user!
 
+
   def new
     @library = Library.new
   end
@@ -20,6 +21,10 @@ class Librarian::LibrariesController < ApplicationController
   end
 
   def index
+
+  end
+
+  def update
 
   end
 
