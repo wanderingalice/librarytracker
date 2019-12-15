@@ -1,5 +1,5 @@
 <h1 class="text-center DashTitle">My Libraries</h1>
-<%= current_user.libraries.each do |library| %>
+<% current_user.libraries.each do |library| %>
   <div class = "frosted-box col-10 offset-1">
     <br />
     <h2 class="text-center"><%= link_to library.title, librarian_library_path(library), class: "LibraryTitle" %></h2>

@@ -14,6 +14,38 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="modal-title"></h4>
+      </div>
+      <%= simple_form_for @copy, url: "#", html: {id: 'newCopyForm' } do |f| %>
+      <div class="modal-body">
+        <div id="bookInfo"></div>
+
+          <%= f.association :book,  input_html: { id: 'bookid' }, label_method: :title, value_method: :id, class: "booktitle", id: "booktitle" %>
+          <%= f.association :library, :collection => Library.where('user_id' => @user.id), label_method: :title, value_method: :id, include_blank: false %>
+          <%= f.input :bookowner, input_html: {value: @user.email} %>
+          <%= f.label :status %> &nbsp; &nbsp; &nbsp;
+          <%= f.select :status, options_for_select(Copy::STATUSES) %>
+          <br />
+          <%= f.input :notes %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.submit "Add Copy" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
     <script>
       function handleResponse(response) {
         document.getElementById("searchplace").innerHTML = "<form id='searchbar'><input type='text' id='isbn' placeholder='Search'><button type ='submit'>Search</button></form>";
@@ -35,6 +67,15 @@
     </script>
    
     <script type="text/javascript">
+
+      function sleep(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+          currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+      }
+
         function submitBook(bookid) {
           console.log(bookid);
         var myVolume = "https://www.googleapis.com/books/v1/volumes/" + bookid;
@@ -47,25 +88,32 @@
             if (data.volumeInfo.subtitle === undefined) {var mySubtitle =''} else {var mySubtitle =data.volumeInfo.subtitle};
             var myAuthors = String(data.volumeInfo.authors);
             var myAuthors = myAuthors.replace(/,/g,', ');
-            var myISBN = String(data.volumeInfo.industryIdentifiers)
+            var myISBN = String(data.volumeInfo.industryIdentifiers[0].identifier)
             var payload = {
               book: {
-                "title": data.volumeInfo.title,
-                "subtitle": data.volumeInfo.subtitle,
+                "title": String(data.volumeInfo.title),
+                "subtitle": mySubtitle,
                 "book_id": bookid,
                 "isbn": myISBN,
                 "author": myAuthors,
-                "publisher": data.volumeInfo.publisher,
-                "published_date": data.volumeInfo.publishedDate,
-                "description": data.volumeInfo.description,
-                "page_count": data.volumeInfo.pageCount,
-                "cover_image_small": data.volumeInfo.imageLinks.thumbnail,
-                "cover_image_large": data.volumeInfo.imageLinks.large
+                "publisher": String(data.volumeInfo.publisher),
+                "published_date": Date(data.volumeInfo.publishedDate),
+                "description": String(data.volumeInfo.description),
+                "page_count": Number(data.volumeInfo.pageCount),
+                "cover_image_small": String(data.volumeInfo.imageLinks.thumbnail),
+                "cover_image_large": String(data.volumeInfo.imageLinks.large)
               }
-            }
+            };
               console.log(payload)
               $.post("/books", payload).success(function(data) {
                 console.log("Successful HTTP Request");
+                var linkID = data.id;
+                $("#copyModal").modal()
+                $('#modal-title').html(data.title);
+
+              }).error(function(data) { 
+                console.log(data)
+                console.log(bookid)
               });
           } else {
             console.log('error')
@@ -81,7 +129,7 @@
         event.preventDefault();
         var isbn = document.getElementById('isbn').value;
         var searchTerms = isbn.replace(/ /g, "+");
-        var callAPI = "https://www.googleapis.com/books/v1/volumes?q="+ searchTerms +"&callback=handleResponse&key=AIzaSyBEq-PJUNmE0kBG7s761jmUizXrQddKZrM&c";
+        var callAPI = "https://www.googleapis.com/books/v1/volumes?q="+ searchTerms +"&callback=handleResponse";
 
         document.getElementById("content").innerHTML = ""
 
