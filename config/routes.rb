@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :books, only: [:new, :create, :show, :index]
   namespace :librarian do
     resources :libraries do
-      resources :copies, only: [:new, :create, :show]
+      resources :copies
     end
   end
 end

@@ -19,3 +19,40 @@ library
 User
   -libraries
   -copies on loan to user
+
+  html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#flex-content-container {
+  flex: 1;
+}
+
+#footer {
+  position: fixed;
+  width: 100%;
+  min-height: 30px;
+  font-family: 'Crimson Text', serif;
+  font-weight: 600;
+  box-shadow: 0px -1px 3px #2a2a2a;
+  background: image_url('micro_carbon.png'); 
+  color: #FFFFFF;
+  margin-top: 30px;
+  bottom: 0;
+  flex-shrink: 0;
+}
+
+#footer a {
+  color: #FFFFFF;
+}
+
+.foottext {
+  margin-top: 5px;
+}
+

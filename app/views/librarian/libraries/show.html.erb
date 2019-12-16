@@ -4,8 +4,10 @@
     <div class="library-actions float-right">
       <% if current_user && current_user == @library.user %>
         <%= link_to 'Edit', edit_librarian_library_path(@library) %>
-        &nbsp; &nbsp;
+        &nbsp; | &nbsp;
         <%= link_to 'Delete', librarian_library_path(@library), method: :delete, data: {confirm: 'Are you sure you want to delete this library?'} %>
+        &nbsp; | &nbsp;
+        <%= link_to 'Add a New Book', books_url %>
       <% end %>
     </div>
   </div>
@@ -36,6 +38,80 @@
     </div>
   </div>
   <hr class='mystyle' data-content=" "></hr>
+  <h3>In Library</h3>
+  <div class="bookslist container d-flex align-content-center flex-wrap">
+    <% @copies.each do |copy| %>
+      <% if copy.status == 'In Library' %>
+        <div class="bookdisplay2 flex-fill">
+          <div class="row col-12 editbuttons justify-content-end ">
+            <% if current_user && current_user == copy.library.user %>
+              &nbsp; &nbsp; &nbsp;
+              <%= link_to 'Edit', edit_librarian_library_copy_path(copy.library, copy) %>
+              &nbsp; | &nbsp;
+              <%= link_to 'Delete', librarian_library_copy_path(copy.library, copy), method: :delete, data: {confirm: 'Are you sure you want to delete this copy?'} %>
+            <% end %>
+          </div>
+          <div class="row bookhead col-12">
+            <h5><%= copy.book.title %></h5>
+          </div>
+          <div class="row col-12">
+            <div class="col-3">
+              <%= image_tag copy.book.cover_image_small, class: 'img-thumb' %>
+            </div>
+            <div class="col-9">
+              <%= copy.book.author %>
+              <br />
+              Status: <%= copy.status %>
+              <br />
+              Collected on: <%= copy.created_at %>
+              <br />
+              Copy Notes
+              <br />
+              <%= copy.notes %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
   <br />
+  <hr class="mystyle" />
+  <h3>Out Of Library</h3>
+  <div class="bookslist container d-flex align-content-center flex-wrap">
+    <% @copies.each do |copy| %>
+      <% if copy.status != 'In Library' %>
+        <div class="bookdisplay2 flex-fill">
+          <div class="row col-12 editbuttons justify-content-end ">
+            <% if current_user && current_user == copy.library.user %>
+              &nbsp; &nbsp; &nbsp;
+              <%= link_to 'Edit', edit_librarian_library_copy_path(copy.library, copy) %>
+              &nbsp; | &nbsp;
+              <%= link_to 'Delete', librarian_library_copy_path(copy.library, copy), method: :delete, data: {confirm: 'Are you sure you want to delete this copy?'} %>
+            <% end %>
+          </div>
+          <div class="row bookhead col-12">
+            <h5><%= copy.book.title %></h5>
+          </div>
+          <div class="row col-12">
+            <div class="col-3">
+              <%= image_tag copy.book.cover_image_small, class: 'img-thumb' %>
+            </div>
+            <div class="col-9">
+              <%= copy.book.author %>
+              <br />
+              Status: <%= copy.status %>
+              <br />
+              Collected on: <%= copy.created_at %>
+              <br />
+              Copy Notes
+              <br />
+              <%= copy.notes %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
 
-</div>
+  </div>
+  <br />
+<br />

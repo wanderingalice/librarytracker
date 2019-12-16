@@ -1,0 +1,44 @@
+<br />
+<div class= "frosted-box col-10 offset-1  text-center">
+  <br />
+  <h1><%= @copy.book.title %></h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <% if @copy.book.subtitle != "" %>
+          <%= @copy.book.subtitle %>
+          <br /><br />
+        <% end %>
+        <%= @copy.book.author %>
+        <br /><br />
+        <%= image_tag @copy.book.cover_image_small, class: 'img-fluid' %>
+        <br /><br />
+        <%= @copy.book.publisher %>
+        <br /><br />
+        Page Count: <%= @copy.book.page_count %> &nbsp; | &nbsp; Published On: <%= @copy.book.published_date %>
+        <br /><br />
+        <%= @copy.book.description.html_safe %>
+        <br /><br />
+      </div>
+
+      <div class="col-8">
+        <br />
+        <h3>Edit Copy Information</h3>
+        <br />
+        <div>This copy belongs to:</div>
+        <div>User: <%= @copy.bookowner %>. | Library: <%= @copy.library.title %></div>
+        <br />
+        <%= simple_form_for @copy, url: librarian_library_copy_url do |f| %>
+          <%= f.label :status %>
+          <%= f.select :status, options_for_select(Copy::STATUSES) %>
+          <br /><br />
+          <%= f.input :loanedto, label: 'Loaned to', placeholder: 'name or email' %>
+          <br />
+          <%= f.input :notes %>
+          <%= f.submit "Save" %>
+        
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

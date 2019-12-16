@@ -19,6 +19,7 @@ class Librarian::LibrariesController < ApplicationController
   def show
     @library = Library.find_by_id(params[:id])
     return render_not_found if @library.blank?
+    @copies = Copy.where(library_id: @library.id).order('status ASC').all
   end
 
   def edit

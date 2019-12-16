@@ -5,4 +5,5 @@ class Copy < ApplicationRecord
 STATUSES = ['In Library', 'On Loan', 'Other']
 validates :status, presence: true, inclusion: { in: STATUSES }
 
+
 end
