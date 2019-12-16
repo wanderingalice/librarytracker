@@ -160,3 +160,13 @@ hr.mystyle:after {
     font-size: 1.5em;
     padding: 0 0.5em;
 }
+
+.library-actions {
+  margin-left: 15px;
+  font-family: 'Crimson Text', serif;
+}
+
+#copy_status {
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+}

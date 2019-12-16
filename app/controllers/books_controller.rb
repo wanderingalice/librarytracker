@@ -4,13 +4,20 @@ class BooksController < ApplicationController
   def create
     @book = Book.where(book_id: book_params[:book_id]).first 
     @book = Book.create!(book_params) unless @book
-    render json: @book 
+    redirect_to book_path(@book)
   end
 
   def index
     @copy = Copy.new
     @user = current_user
     @book = Book.all
+  end
+
+  def show
+    @book = Book.find_by_id(params[:id])
+    @user = current_user
+    @copy = Copy.new
+    return render_not_found if @book.blank?
   end
 
   private

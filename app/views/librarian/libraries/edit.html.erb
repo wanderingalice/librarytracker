@@ -1,0 +1,15 @@
+<br />
+<div class="frosted-box col-10 offset-1">
+  <br />
+  <h1 class="sectionhead">Edit <%= @library.title %></h1>
+  <%= simple_form_for @library, url: librarian_library_path(@library) do |f| %>
+    <%= f.input :title, :label => "Library Name" %>
+    <%= f.input :librarytype, :label => 'Type of Library' %>
+    <%= f.input :description, :label => "Library Description" %>
+    <%= f.input :location, :label => "Location of Library" %>
+    <br />
+    <%= f.submit "Edit", class: 'btn btn-primary' %>
+    <br />
+  <% end %>
+  <br />
+</div>

@@ -2,6 +2,17 @@
 <% current_user.libraries.each do |library| %>
   <div class = "frosted-box col-10 offset-1">
     <br />
+    <div class="row text-left editbuttons">
+      <div class="library-actions float-right">
+        <% if current_user && current_user == library.user %>
+          <%= link_to 'Edit', edit_librarian_library_path(library) %>
+          &nbsp; &nbsp;
+          <%= link_to 'Delete', librarian_library_path(library), method: :delete, data: {confirm: 'Are you sure you want to delete this library?'} %>
+          &nbsp; &nbsp;
+          <%= link_to 'Show Library', librarian_library_path(library) %>
+        <% end %>
+      </div>
+    </div>
     <h2 class="text-center"><%= link_to library.title, librarian_library_path(library), class: "LibraryTitle" %></h2>
     <hr class="mystyle" />
     <div class= "container">
@@ -39,3 +50,4 @@
   </div>
   <br />
 <% end %>
+

@@ -22,7 +22,7 @@ FactoryBot.define do
   end
 
   factory :library do
-   title { "Testing Library" }
+    title { "Testing Library" }
     librarytype { "Personal" }
     description { "a testing library" }
     location { "nowhere" }

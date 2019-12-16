@@ -1,1 +1,74 @@
-<h1>Book</h1>
+<br />
+<div class= "frosted-box col-10 offset-1  text-center">
+  <br />
+  <h1><%= @book.title %></h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <% if @book.subtitle != "" %>
+          <%= @book.subtitle %>
+          <br /><br />
+        <% end %>
+        <%= @book.author %>
+        <br /><br />
+        <%= image_tag @book.cover_image_small, class: 'img-fluid' %>
+        <br /><br />
+        <%= @book.publisher %>
+        <br /><br />
+        Page Count: <%= @book.page_count %> &nbsp; | &nbsp; Published On: <%= @book.published_date %>
+        <br /><br />
+        <%= @book.description.html_safe %>
+        <br /><br />
+      </div>
+
+      <div class="col-8">
+        <br />
+        <h3>Your Copy Information</h3>
+        <br />
+        <%= simple_form_for @copy, url: "#" do |f| %>
+          <%= f.association :library, :collection => Library.where('user_id' => @user.id), label_method: :title, value_method: :id, include_blank: false %>
+          <%= f.label :status %>
+          <%= f.select :status, options_for_select(Copy::STATUSES) %>
+          <br />
+          <%= f.input :book_id, :as => :hidden, :input_html => { :value => @book.id } %>
+          <%= f.input :bookowner, :as => :hidden, input_html: {value: @user.email}, readonly: true %>
+          <br />
+          <%= f.input :notes %>
+          <%= f.submit "Add Copy" %>
+        
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<script>
+
+   $('#new_copy').submit(function(event) {
+    event.preventDefault();
+    var data = JSON.stringify( $('#new_copy').serializeArray() );
+    var data2 = JSON.parse(data)
+    var copyLibrary = data2[2].value
+    var copyBookowner = data2[5].value
+    var copyBookID = data2[4].value
+    var copyStatus = data2[3].value
+    var copyNotes = data2[6].value
+    console.log(copyBookID)
+    var payload = {
+      copy: {
+        book_id: copyBookID,
+        bookowner: copyBookowner,
+        status: copyStatus,
+        notes: copyNotes
+      }
+    }
+    var postTo = "/librarian/libraries/" + copyLibrary + "/copies"
+    console.log(postTo)
+    $.post(postTo, payload).success(function(data) {
+          console.log("Successful HTTP Request");
+        }).error(function(data) { 
+          console.log("error")
+        });
+  });
+
+</script>
