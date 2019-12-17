@@ -1,5 +1,6 @@
 class Librarian::CopiesController < ApplicationController
- 
+ before_action :authenticate_user!
+
 def new
   @copy = Copy.new
 end
@@ -11,7 +12,7 @@ def create
     if @copy.valid?
       redirect_to librarian_library_path(@library)
     else
-      render :new, status: :unprocessable_entity
+      return render_not_found(:unprocessable_entity)
     end
 end
 
@@ -19,7 +20,7 @@ def edit
     @copy = Copy.find_by_id(params[:id])
     @library = Library.find_by_id(params[:libraryid])
     return render_not_found if @copy.blank?
-    return render_not_found(:forbidden) if @copy.bookowner != current_user.email
+    return render_not_found(:forbidden) if @copy.library.user != current_user
 end
 
 def update
@@ -27,13 +28,13 @@ def update
     @library = Library.find_by_id(params[:library_id])
     @book = Book.find_by_id(params[:book_id])
     return render_not_found if @copy.blank?
-    return render_not_found(:forbidden) if @copy.bookowner != current_user.email
+    return render_not_found(:forbidden) if @copy.library.user != current_user
     @copy.update_attributes(copy_params)
 
      if @copy.valid?
       redirect_to librarian_library_path(@copy.library)
     else
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
 end
 

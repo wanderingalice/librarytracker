@@ -8,9 +8,9 @@ FactoryBot.define do
   end
 
   factory :book do
-    title { "TestBook" }
+    title { "Test" }
     subtitle { "Something witty here" }
-    book_id { "-abc-123-" }
+    book_id { "12" }
     isbn { "1234567890" }
     author { "Nobody Nowhere" }
     publisher { "Some Publisher" }
@@ -27,5 +27,13 @@ FactoryBot.define do
     description { "a testing library" }
     location { "nowhere" }
     association :user
+  end
+
+  factory :copy do
+    bookowner {"dummyEmail@gmail.com"}
+    status { "In Library" }
+    notes { "notes here" }
+    association :library
+    association :book
   end
 end
